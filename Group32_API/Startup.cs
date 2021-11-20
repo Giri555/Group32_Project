@@ -11,6 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Group32_API.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace Group32_API
 {
@@ -32,6 +35,26 @@ namespace Group32_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Group32_API", Version = "v1" });
             });
+
+            // AWS RDS:
+            // read credentials from parameter store (AWS systems manager)
+            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("Connection2RDS"))
+            {
+                UserID = Configuration["DbUser"],
+                Password = Configuration["DbPassword"]
+            };
+            var connection = builder.ConnectionString;
+
+            // Destination:
+            services.AddDbContext<DestinationDBContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IDestinationRepository, DestinationRepository>();
+
+            // Review:
+            services.AddDbContext<ReviewDBContext>(options => options.UseSqlServer(connection));
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+
+            // Configure AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
