@@ -24,6 +24,14 @@ namespace Group32_Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // refer ms docs - https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-2.2#named-clients-3
+            // Register a Named HttpClient:
+            services.AddHttpClient("project_api", c =>
+            {
+                c.BaseAddress = new Uri("https://localhost:44321/");
+                c.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
