@@ -49,9 +49,6 @@ namespace Group32_API
             services.AddDbContext<DestinationDBContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IDestinationRepository, DestinationRepository>();
 
-            // Review:
-            services.AddDbContext<ReviewDBContext>(options => options.UseSqlServer(connection));
-            services.AddScoped<IReviewRepository, ReviewRepository>();
 
             // Configure AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
