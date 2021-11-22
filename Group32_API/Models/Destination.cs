@@ -12,22 +12,25 @@ namespace Group32_API.Models
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Type { get; set; } // restaurant, hotel, park, attraction, etc,... what type of destination is it?
+        public string Description { get; set; }
 
-/*
-        public Destination()
-        {
+        public virtual ICollection<Review> Reviews { get; set; }
 
-        }
+        /*
+                public Destination()
+                {
 
-        public Destination(int destinationId, string name, string address, string phoneNumber, string type)
-        {
-            DestinationId = destinationId;
-            Name = name;
-            Address = address;
-            PhoneNumber = phoneNumber;
-            Type = type;
-        }
-*/
+                }
+
+                public Destination(int destinationId, string name, string address, string phoneNumber, string type)
+                {
+                    DestinationId = destinationId;
+                    Name = name;
+                    Address = address;
+                    PhoneNumber = phoneNumber;
+                    Type = type;
+                }
+        */
 
     }
 }

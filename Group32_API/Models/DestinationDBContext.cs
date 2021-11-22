@@ -12,6 +12,8 @@ namespace Group32_API.Models
         {
         }
 
-        public DbSet<Destination> Destinations { get; set; }
+        public virtual DbSet<Destination> Destinations { get; set; }
+
+        public virtual DbSet<Review> Reviews { get; set; }
     }
 }
