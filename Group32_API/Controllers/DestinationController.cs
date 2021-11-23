@@ -24,7 +24,7 @@ namespace Group32_API.Controllers
         // GET: api/<controller>
         [HttpGet]
         [Route("/api/destinations")]
-        public async Task<ActionResult<Destination>> GetListDestinations()
+        public async Task<ActionResult<DestinationInfo>> GetListDestinations()
         {
             var destinations = await _destinationRepository.GetListDestinations();
             var results = _mapper.Map<IEnumerable<DestinationWithoutReviewsDto>>(destinations);
@@ -32,7 +32,7 @@ namespace Group32_API.Controllers
         }
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Destination>> GetDestinationById(int id, bool includeReview = false)
+        public async Task<ActionResult<DestinationInfo>> GetDestinationById(int id, bool includeReview = false)
         {
             var destination = await _destinationRepository.GetDestinationById(id, includeReview);
             if (destination == null) { return NotFound(); }

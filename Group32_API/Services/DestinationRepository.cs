@@ -6,32 +6,32 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Models
 {
-    public class DestinationRepository : IDestinationRepository // for implementation refer ppt: week#9(API with EFCORE) --> slide # 10
+    public class DestinationRepository : IDestinationRepository
     {
-        private DestinationDBContext _context;
+        private DestinationInfoDBContext _context;
 
-        public DestinationRepository(DestinationDBContext context)
+        public DestinationRepository(DestinationInfoDBContext context)
         {
             _context = context;
         }
         public async Task<bool> DestinationExists(int desId)
         {
-            return await _context.Destinations.AnyAsync<Destination>(d => d.DestinationId == desId);
+            return await _context.DestinationInfos.AnyAsync<DestinationInfo>(d => d.DestinationId == desId);
         }
-        public async Task<IEnumerable<Destination>> GetListDestinations()
+        public async Task<IEnumerable<DestinationInfo>> GetListDestinations()
         {
-            var result = _context.Destinations.OrderBy(d => d.Name);
+            var result = _context.DestinationInfos.OrderBy(d => d.Name);
             return await result.ToListAsync();
         }
-        public async Task<Destination> GetDestinationById(int desId, bool includePointsOfInterest)
+        public async Task<DestinationInfo> GetDestinationById(int desId, bool includePointsOfInterest)
         {
-            IQueryable<Destination> result;
+            IQueryable<DestinationInfo> result;
             if (includePointsOfInterest)
             {
-                result = _context.Destinations.Include(c => c.Reviews).Where(c => c.DestinationId == desId);
+                result = _context.DestinationInfos.Include(c => c.Reviews).Where(c => c.DestinationId == desId);
             }
             else
-                result = _context.Destinations.Where(c => c.DestinationId == desId);
+                result = _context.DestinationInfos.Where(c => c.DestinationId == desId);
             return await result.FirstOrDefaultAsync();
         }
         public async Task<Review> GetReviewById(int reviewId)
@@ -50,9 +50,9 @@ namespace Group32_API.Models
             return await result.ToListAsync();
         }
 
-        public void CreateDestination(Destination des)
+        public void CreateDestination(DestinationInfo des)
         {
-            _context.Destinations.Add(des);
+            _context.DestinationInfos.Add(des);
         }
         public async Task AddReviewForDestination(int desId, Review review)
         {
@@ -66,7 +66,7 @@ namespace Group32_API.Models
         public async Task DeleteDestination(int desId)
         {
             var destination = await GetDestinationById(desId, false);
-            _context.Destinations.Remove(destination);
+            _context.DestinationInfos.Remove(destination);
         }
         public async Task DeleteReview(int reviewId)
         {

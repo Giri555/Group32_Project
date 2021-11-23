@@ -12,9 +12,9 @@ namespace Group32_API.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<Destination, DestinationWithoutReviewsDto>();
-            CreateMap<Destination, DestinationDto>();
-            CreateMap<Destination, Destination4CreationOrUpdateDto>();
+            CreateMap<DestinationInfo, DestinationWithoutReviewsDto>();
+            CreateMap<DestinationInfo, DestinationDto>();
+            CreateMap<DestinationInfo, Destination4CreationOrUpdateDto>();
             CreateMap<Review, ReviewDto>();
             CreateMap<Review, Review4CreationOrUpdateDto>();
         }

@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Models
 {
-    public interface IDestinationRepository // for implementation refer ppt: week#9(API with EFCORE) --> slide # 9
+    public interface IDestinationRepository
     {
         Task<bool> DestinationExists(int desId);
-        Task<IEnumerable<Destination>> GetListDestinations();
-        Task<Destination> GetDestinationById(int desId, bool includeReviews);
+        Task<IEnumerable<DestinationInfo>> GetListDestinations();
+        Task<DestinationInfo> GetDestinationById(int desId, bool includeReviews);
         Task<Review> GetReviewById(int reviewId);
         Task<IEnumerable<Review>> GetReviewsForDestination(int desId);
         Task<IEnumerable<Review>> GetReviewsByRatingForDetination(int desId, int rating);
         //create
-        void CreateDestination(Destination des);
+        void CreateDestination(DestinationInfo des);
         Task AddReviewForDestination(int desId, Review newReview);
         //update
         //Task UpdateAReviewForDestination(int desId, Review updateReview);

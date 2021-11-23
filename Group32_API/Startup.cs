@@ -45,8 +45,8 @@ namespace Group32_API
             };
             var connection = builder.ConnectionString;
 
-            // Destination:
-            services.AddDbContext<DestinationDBContext>(options => options.UseSqlServer(connection));
+            // DestinationInfo:
+            services.AddDbContext<DestinationInfoDBContext>(options => options.UseSqlServer(connection));
             services.AddScoped<IDestinationRepository, DestinationRepository>();
 
 
