@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Group32_API.Model
+namespace Group32_API.Models
 {
     public partial class Review
     {

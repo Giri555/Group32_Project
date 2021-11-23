@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Group32_API.Model
+namespace Group32_API.Models
 {
     public partial class DestinationInfoDBContext : DbContext
     {
