@@ -21,9 +21,25 @@ namespace Group32_API.Controllers
             _reviewRepository = destinationRepository;
             _mapper = mapper;
         }
+        // GET: api/<controller>
+        [HttpGet("{cityId}/reviews")]
+
+        public async Task<ActionResult<Review>> GetReviews(int desId)
+        {
+            if (!(await _reviewRepository.DestinationExists(desId)))
+            {
+                return NotFound();
+            }
+
+            var reviews4Destination = await _reviewRepository.GetReviewsForDestination(desId);
+            var reviews4DestinationResults = _mapper.Map<IEnumerable<Review>>(reviews4Destination);
+
+            return Ok(reviews4Destination);
+        }
+
         //POST create a review 
         [HttpPost("{destinationId}/review")]
-        public async Task<ActionResult<ReviewDto>> CreatePointOfInterest(int desId, [FromBody] Review4CreationOrUpdateDto newReview)
+        public async Task<ActionResult<Review>> CreateReview(int desId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
 
@@ -31,40 +47,38 @@ namespace Group32_API.Controllers
 
             if (!await _reviewRepository.DestinationExists(desId)) return NotFound();
 
-            var review = _mapper.Map<Review>(newReview);
+            var finalReview = _mapper.Map<Review>(newReview);
 
-            await _reviewRepository.AddReviewForDestination(desId, review);
+            await _reviewRepository.AddReviewForDestination(desId, finalReview);
 
             if (!await _reviewRepository.Save())
             {
                 return StatusCode(500, "A problem happened while handling your request.");
             }
 
-           // var createdReview = _mapper.Map<ReviewDto>(review);
+            var createdReviewToReturn = _mapper.Map<ReviewDto>(finalReview);
 
-            return NoContent();
+            return CreatedAtAction("GetReview", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
         }
         // PUT api/<controller>/5
-
-        [HttpPut("{destinationId}/reviews/{id}")]
-        public async Task<ActionResult> UpdatePointOfInterest(int desId, int id, [FromBody] Review4CreationOrUpdateDto review)
+        [HttpPut("{cityId}/reviews/{id}")]
+        public async Task<ActionResult> UpdateReview(int desId, int reviewId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
-            if (review == null) return BadRequest();
+            if (newReview == null) return BadRequest();
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             if (!await _reviewRepository.DestinationExists(desId)) return NotFound();
 
-            List<Review> previousReview = await _reviewRepository.GetReviewsForDestination(desId);
+            Review previousReview = await _reviewRepository.GetReviewById(reviewId);
 
             if (previousReview == null) return NotFound();
 
-            _mapper.Map(review, previousReview);
-
+            _mapper.Map(newReview, previousReview);
 
             if (!await _reviewRepository.Save())
             {
-                return StatusCode(500, "A problem happened while handling your request.");
+                return StatusCode(500, "A problem happened while updating review your request.");
             }
 
             return NoContent();

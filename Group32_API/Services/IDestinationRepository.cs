@@ -10,6 +10,7 @@ namespace Group32_API.Models
         Task<bool> DestinationExists(int desId);
         Task<IEnumerable<Destination>> GetListDestinations();
         Task<Destination> GetDestinationById(int desId, bool includeReviews);
+        Task<Review> GetReviewById(int reviewId);
         Task<IEnumerable<Review>> GetReviewsForDestination(int desId);
         Task<IEnumerable<Review>> GetReviewsByRatingForDetination(int desId, int rating);
         //create
