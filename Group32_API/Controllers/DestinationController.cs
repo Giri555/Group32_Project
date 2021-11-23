@@ -57,14 +57,30 @@ namespace Group32_API.Controllers
             return NoContent();
         }
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAReviewOfRestaurant(int desId, int reviewId, [FromBody] Review review) {
+        [HttpPut("{desId}")]
+        public async Task<ActionResult> UpdateDestination(int desId, [FromBody] Destination4CreationOrUpdateDto destination)
+        {
+            if (destination == null || !ModelState.IsValid) return BadRequest();
+            if (!await _destinationRepository.DestinationExists(desId)) return NotFound();
+            DestinationInfo previousDestination = await _destinationRepository.GetDestinationById(desId,false);
+            if (previousDestination == null) return NotFound();
+            _mapper.Map(destination, previousDestination);
+            if (!await _destinationRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+            return NoContent();
+        }
+        // PUT api/<controller>/5
+        [HttpPut("{desId}/reviews")]
+        public async Task<ActionResult> UpdateAReviewOfRestaurant(int desId, [FromBody] Review review)
+        {
             if (review == null || !ModelState.IsValid) return BadRequest();
             if (!await _destinationRepository.DestinationExists(desId)) return NotFound();
             IEnumerable<Review> previousReviews = await _destinationRepository.GetReviewsForDestination(desId);
             if (previousReviews == null) return NotFound();
             _mapper.Map(review, previousReviews);
-            if(!await _destinationRepository.Save())
+            if (!await _destinationRepository.Save())
             {
                 return StatusCode(500, "A problem happened while handling your request.");
             }
@@ -74,6 +90,10 @@ namespace Group32_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDestination(int id) {
             await _destinationRepository.DeleteDestination(id);
+            if (!await _destinationRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
             return Ok();
         }
     }
