@@ -22,7 +22,7 @@ namespace Group32_API.Controllers
             _mapper = mapper;
         }
         // GET: api/<controller>
-        [HttpGet("{cityId}/reviews")]
+        [HttpGet("{desId}/reviews")]
 
         public async Task<ActionResult<Review>> GetReviews(int desId)
         {
@@ -38,7 +38,7 @@ namespace Group32_API.Controllers
         }
 
         //POST create a review 
-        [HttpPost("{destinationId}/review")]
+        [HttpPost("{desId}/review")]
         public async Task<ActionResult<Review>> CreateReview(int desId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
@@ -61,7 +61,7 @@ namespace Group32_API.Controllers
             return CreatedAtAction("GetReview", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
         }
         // PUT api/<controller>/5
-        [HttpPut("{cityId}/reviews/{id}")]
+        [HttpPut("{desId}/reviews/{id}")]
         public async Task<ActionResult> UpdateReview(int desId, int reviewId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
@@ -85,7 +85,7 @@ namespace Group32_API.Controllers
         }
 
         // DELETE api/<controller>/5
-        [HttpDelete("{destinationId}/reviews/{reviewId}")]
+        [HttpDelete("reviews/{id}")]
         public async Task<ActionResult> DeleteReview(int id)
         {
             await _reviewRepository.DeleteReview(id);
