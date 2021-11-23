@@ -16,7 +16,7 @@ namespace Group32_API.Controllers
     {
         private IDestinationRepository _reviewRepository;
         private readonly IMapper _mapper;
-        ReviewController(IDestinationRepository destinationRepository, IMapper mapper)
+        public ReviewController(IDestinationRepository destinationRepository, IMapper mapper)
         {
             _reviewRepository = destinationRepository;
             _mapper = mapper;

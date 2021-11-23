@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Services
 {
-    interface IReviewRepository
+    public interface IReviewRepository
     {
         Task<IEnumerable<Review>> GetReviewsForDestination(int desId);
         Task<IEnumerable<Review>> GetReviewsByRatingForDetination(int desId, int rating);

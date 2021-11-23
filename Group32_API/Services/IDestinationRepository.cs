@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Models
 {
-    interface IDestinationRepository // for implementation refer ppt: week#9(API with EFCORE) --> slide # 9
+    public interface IDestinationRepository // for implementation refer ppt: week#9(API with EFCORE) --> slide # 9
     {
         Task<bool> DestinationExists(int desId);
         Task<IEnumerable<Destination>> GetListDestinations();

@@ -16,7 +16,7 @@ namespace Group32_API.Controllers
     {
         private IDestinationRepository _destinationRepository;
         private readonly IMapper _mapper;
-        DestinationController(IDestinationRepository destinationRepository, IMapper mapper)
+        public DestinationController(IDestinationRepository destinationRepository, IMapper mapper)
         {
             _destinationRepository = destinationRepository;
             _mapper = mapper;
