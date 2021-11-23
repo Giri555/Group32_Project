@@ -1,5 +1,4 @@
-﻿-- ############### THIS IS A TEMPLATE ##############
-
+﻿
 -- delete the database if it exists
 IF EXISTS(SELECT * from sys.databases WHERE name='DestinationInfoDB') 
 BEGIN 
@@ -46,9 +45,5 @@ CREATE TABLE dbo.Review (
     
  Go
  
-
-
-
-
 
 
