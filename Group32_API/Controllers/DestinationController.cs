@@ -23,7 +23,6 @@ namespace Group32_API.Controllers
         }
         // GET: api/<controller>
         [HttpGet]
-        [Route("/api/destinations")]
         public async Task<ActionResult<DestinationInfo>> GetListDestinations()
         {
             var destinations = await _destinationRepository.GetListDestinations();
@@ -46,7 +45,17 @@ namespace Group32_API.Controllers
         }
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody] string value) { }
+        public async Task<ActionResult<DestinationInfo>> CreateDestination([FromBody] Destination4CreationOrUpdateDto destination) {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (destination == null) return BadRequest();
+            var result = _mapper.Map<DestinationInfo>(destination);
+            _destinationRepository.CreateDestination(result);
+            if (!await _destinationRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+            return NoContent();
+        }
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAReviewOfRestaurant(int desId, int reviewId, [FromBody] Review review) {
