@@ -38,15 +38,16 @@ namespace Group32_API
 
             // AWS RDS:
             // read credentials from parameter store (AWS systems manager)
-            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("Connection2RDS"))
-            {
-                UserID = Configuration["DbUser"],
-                Password = Configuration["DbPassword"]
-            };
-            var connection = builder.ConnectionString;
+            //var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("Connection2RDS"))
+            //{
+              //  UserID = Configuration["DbUser"],
+                //Password = Configuration["DbPassword"]
+            //};
+            //var connection = builder.ConnectionString;
 
             // DestinationInfo:
-            services.AddDbContext<DestinationInfoDBContext>(options => options.UseSqlServer(connection));
+           // services.AddDbContext<DestinationInfoDBContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<DestinationInfoDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection2RDS")));
             services.AddScoped<IDestinationRepository, DestinationRepository>();
 
 
