@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Group32_Client.Models.Review>
+@{
+    ViewData["Title"] = "Reviews";
+}
+
+<h1>Reviews</h1>
+
+<div>
+    @if (Model != null)
+    {
+        @foreach (var item in ViewBag.Reviews)
+        {
+            <hr />
+            <p>Author: @item.Email</p>
+            <p>Rating: @item.Comment</p>
+            <p>Comment: @item.DateTime</p>
+            <hr />
+        }
+    }
+    else
+    {
+        <p>No reviews on this movie yet.</p>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

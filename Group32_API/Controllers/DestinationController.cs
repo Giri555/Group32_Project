@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Group32_API.DTOs;
 using Group32_API.Models;
 using Microsoft.AspNetCore.Http;
