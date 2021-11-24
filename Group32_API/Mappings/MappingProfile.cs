@@ -17,6 +17,7 @@ namespace Group32_API.Mappings
             CreateMap<Destination4CreationOrUpdateDto, DestinationInfo>();
             CreateMap<Review, ReviewDto>();
             CreateMap<Review, Review4CreationOrUpdateDto>();
+            CreateMap<Review4CreationOrUpdateDto, Review>();
         }
     }
 }

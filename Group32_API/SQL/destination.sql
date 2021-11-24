@@ -38,7 +38,7 @@ CREATE TABLE dbo.Review (
     Comment       NVARCHAR (1000) NULL,
     Rating        INT    NOT NULL,
     Email         NVARCHAR(50) NOT NULL,
-    DateTime      NVARCHAR NOT NULL,
+    DateTime      NVARCHAR(50) NOT NULL,
     DestinationId INT NOT NULL,
     CONSTRAINT FK_Review_Destination_DestinationId FOREIGN KEY ([DestinationId]) REFERENCES DestinationInfo (DestinationId) ON DELETE CASCADE   
     );

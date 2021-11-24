@@ -58,7 +58,7 @@ namespace Group32_API.Controllers
 
             var createdReviewToReturn = _mapper.Map<ReviewDto>(finalReview);
 
-            return CreatedAtAction("GetReview", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
+            return CreatedAtAction("GetReviews", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
         }
         // PUT api/<controller>/5
         [HttpPut("{desId}/reviews/{id}")]
