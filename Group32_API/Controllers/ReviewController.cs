@@ -21,9 +21,9 @@ namespace Group32_API.Controllers
             _reviewRepository = destinationRepository;
             _mapper = mapper;
         }
+
         // GET: api/<controller>
         [HttpGet("{desId}/reviews")]
-
         public async Task<ActionResult<Review>> GetReviews(int desId)
         {
             if (!(await _reviewRepository.DestinationExists(desId)))
