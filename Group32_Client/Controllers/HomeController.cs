@@ -17,23 +17,20 @@ namespace Group32_Client.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private const string NAMED_CLIENT = "project_api";
-        static HttpClient client;
 
         public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
-            client = new HttpClient();
-            client.BaseAddress = new Uri("http://lb-group32api-1052255083.ca-central-1.elb.amazonaws.com/api/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task<IActionResult> Index()
         {
             string json;
             HttpResponseMessage response;
-            response = await client.GetAsync("destination");
+            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination");
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 json = await response.Content.ReadAsStringAsync();
@@ -48,11 +45,13 @@ namespace Group32_Client.Controllers
 
         [HttpGet]
         [Route("{resId}/Reviews")]
-        public async Task<IActionResult> Reviews(string resId)
+        public async Task<IActionResult> Reviews(string resId) // ################ Needs testing #############
         {
             string json;
             HttpResponseMessage response;
-            response = await client.GetAsync("reviews/"+resId+"/reviews");
+            var request = new HttpRequestMessage(HttpMethod.Get, "reviews/" + resId + "/reviews");
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
                 json = await response.Content.ReadAsStringAsync();
@@ -60,7 +59,7 @@ namespace Group32_Client.Controllers
                 ViewBag.Reviews = reviews;
                 return View(reviews);
             }
-            else 
+            else
                 return View();
         }
 
