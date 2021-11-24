@@ -49,7 +49,7 @@ namespace Group32_Client.Controllers
         {
             string json;
             HttpResponseMessage response;
-            var request = new HttpRequestMessage(HttpMethod.Get, "reviews/" + resId + "/reviews");
+            var request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + resId + "/reviews");
             var client = _clientFactory.CreateClient(NAMED_CLIENT);
             response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
