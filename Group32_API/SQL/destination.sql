@@ -45,5 +45,15 @@ CREATE TABLE dbo.Review (
     
  Go
  
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user1@mail.ca', '24-11-2021', 7, 'Food was amazing', 1);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user2@mail.ca', '24-11-2021', 8, 'Staff were great', 1);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user3@mail.ca', '24-11-2021', 9, 'Food was soooooo good', 1);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user1@mail.ca', '24-11-2021', 6, 'Average place, good food, no complaints', 2);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user2@mail.ca', '24-11-2021', 7, 'Very friendly staff', 2);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user1@mail.ca', '24-11-2021', 5, 'Food was amazing', 3);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user2@mail.ca', '24-11-2021', 6, 'Great place, awesome food', 3);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user3@mail.ca', '24-11-2021', 10, 'Fantastic place to hang out', 4);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user1@mail.ca', '24-11-2021', 1, 'It was alright', 5);
+insert into Review(Email, DateTime, Rating, Comment, DestinationId) values('user2@mail.ca', '24-11-2021', 2, 'The seating was bad', 5);
 
 
