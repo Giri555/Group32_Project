@@ -69,6 +69,16 @@ namespace Group32_Client.Controllers
         }
 
         [HttpGet]
+        [Route("{resId}/Delete")]
+        public async Task<ActionResult> Delete(string resId)
+        {
+            HttpResponseMessage response;
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            response = await client.DeleteAsync("api/destination/" + resId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         [Route("{resId}/Reviews")]
         public async Task<IActionResult> Reviews(string resId)
         {

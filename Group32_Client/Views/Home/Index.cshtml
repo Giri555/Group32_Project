@@ -4,7 +4,10 @@
 }
 <div class="text-center">
     <h1 class="display-4">Welcome to ON Foodie</h1>
-    <p>Here is the list of local restaurant you may like</p>
+    <p>Here is the list of local restaurant(s) you may like</p>
+    <p class="my-1">
+        <a class="btn btn-success float-left my-1" asp-action="CreateRestaurant">Add Restaurant</a>
+    </p>
     <table class="table">
         <thead>
             <tr>
@@ -21,7 +24,13 @@
                     @Html.DisplayNameFor(model => model.Description)
                 </th>
                 <th>
-                    Reviews
+                    Review(s)
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Delete
                 </th>
             </tr>
         </thead>
@@ -44,11 +53,14 @@
                     <td>
                         <a class="btn btn-primary" asp-action="Reviews" asp-route-resId="@item.DestinationId">Reviews</a>
                     </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-resId="@item.DestinationId">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-resId="@item.DestinationId">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <p class="mt-5">
-        <a class="btn btn-success" asp-action="CreateRestaurant">Add Restaurant</a>
-    </p>
 </div>
