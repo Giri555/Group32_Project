@@ -57,6 +57,16 @@ namespace Group32_Client.Controllers
                 json = await response.Content.ReadAsStringAsync();
                 List<Review> reviews = JsonConvert.DeserializeObject<List<Review>>(json);
                 ViewBag.Reviews = reviews;
+
+                // Get the restaurant's name:
+                request = new HttpRequestMessage(HttpMethod.Get, "api/destination/" + resId);
+                response = await client.SendAsync(request);
+                if(response.IsSuccessStatusCode)
+                {
+                    json = await response.Content.ReadAsStringAsync();
+                    ViewBag.ResName = JsonConvert.DeserializeObject<Restaurant>(json).Name;
+                }
+
                 return View(reviews);
             }
             else
