@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Group32_Client.Controllers
@@ -24,6 +25,7 @@ namespace Group32_Client.Controllers
             _clientFactory = clientFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             string json;
@@ -44,8 +46,31 @@ namespace Group32_Client.Controllers
         }
 
         [HttpGet]
+        [Route("Create")]
+        public IActionResult CreateRestaurant()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Create")]
+        public async Task<IActionResult> CreateRestaurant(Restaurant res)
+        {
+            HttpResponseMessage response;
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            response = await client.PostAsJsonAsync("api/destination", res);
+            if(response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Please try again, all data about a restaurant must be provided.");
+            return View(res);
+        }
+
+        [HttpGet]
         [Route("{resId}/Reviews")]
-        public async Task<IActionResult> Reviews(string resId) // ################ Needs testing #############
+        public async Task<IActionResult> Reviews(string resId)
         {
             string json;
             HttpResponseMessage response;
