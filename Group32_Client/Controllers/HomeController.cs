@@ -69,8 +69,40 @@ namespace Group32_Client.Controllers
         }
 
         [HttpGet]
-        [Route("{resId}/Delete")]
-        public async Task<ActionResult> Delete(string resId)
+        [Route("{resId}/UpdateRestaurant")]
+        public async Task<ActionResult> UpdateRestaurant(string resId)
+        {
+            string json;
+            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination/" + resId);
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            var response = await client.SendAsync(request);
+            Restaurant res = null;
+            if (response.IsSuccessStatusCode)
+            {
+                json = await response.Content.ReadAsStringAsync();
+                res = JsonConvert.DeserializeObject<Restaurant>(json);
+            }
+            return View(res);
+        }
+
+        [HttpPost]
+        [Route("{resId}/UpdateRestaurant")]
+        public async Task<ActionResult> UpdateRestaurant(string resId, Restaurant res)
+        {
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            var response = await client.PutAsJsonAsync("api/destination/" + resId, res);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Please try again.");
+            return View(res);
+        }
+
+        [HttpGet]
+        [Route("{resId}/DeleteRestaurant")]
+        public async Task<ActionResult> DeleteRestaurant(string resId)
         {
             HttpResponseMessage response;
             var client = _clientFactory.CreateClient(NAMED_CLIENT);

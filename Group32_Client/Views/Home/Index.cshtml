@@ -54,10 +54,10 @@
                         <a class="btn btn-primary" asp-action="Reviews" asp-route-resId="@item.DestinationId">Reviews</a>
                     </td>
                     <td>
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-resId="@item.DestinationId">Edit</a>
+                        <a class="btn btn-warning" asp-action="UpdateRestaurant" asp-route-resId="@item.DestinationId">Edit</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-resId="@item.DestinationId">Delete</a>
+                        <a class="btn btn-danger" asp-action="DeleteRestaurant" asp-route-resId="@item.DestinationId">Delete</a>
                     </td>
                 </tr>
             }
