@@ -78,21 +78,6 @@ namespace Group32_API.Controllers
             }
             return NoContent();
         }
-        // PUT api/<controller>/5
-        [HttpPut("{desId}/reviews")]
-        public async Task<ActionResult> UpdateAReviewOfRestaurant(int desId, [FromBody] Review review)
-        {
-            if (review == null || !ModelState.IsValid) return BadRequest();
-            if (!await _destinationRepository.DestinationExists(desId)) return NotFound();
-            IEnumerable<Review> previousReviews = await _destinationRepository.GetReviewsForDestination(desId);
-            if (previousReviews == null) return NotFound();
-            _mapper.Map(review, previousReviews);
-            if (!await _destinationRepository.Save())
-            {
-                return StatusCode(500, "A problem happened while handling your request.");
-            }
-            return NoContent();
-        }
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDestination(int id) {

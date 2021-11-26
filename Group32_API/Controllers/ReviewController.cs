@@ -61,7 +61,7 @@ namespace Group32_API.Controllers
             return CreatedAtAction("GetReviews", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
         }
         // PUT api/<controller>/5
-        [HttpPut("{desId}/reviews/{id}")]
+        [HttpPut("{desId}/reviews/{reviewId}")]
         public async Task<ActionResult> UpdateReview(int desId, int reviewId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
@@ -85,11 +85,15 @@ namespace Group32_API.Controllers
         }
 
         // DELETE api/<controller>/5
-        [HttpDelete("reviews/{id}")]
-        public async Task<ActionResult> DeleteReview(int id)
+        [HttpDelete("reviews/{reviewId}")]
+        public async Task<ActionResult> DeleteReview( int reviewId)
         {
-            await _reviewRepository.DeleteReview(id);
-            return NoContent();
+            await _reviewRepository.DeleteReview(reviewId);
+            if (!await _reviewRepository.Save())
+            {
+                return StatusCode(500, "A problem happened while handling your request.");
+            }
+            return NoContent();            
         }
     }
 }
