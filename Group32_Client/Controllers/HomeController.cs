@@ -30,7 +30,7 @@ namespace Group32_Client.Controllers
         {
             string json;
             HttpResponseMessage response;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination");
+            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination/restaurant");
             var client = _clientFactory.CreateClient(NAMED_CLIENT);
             response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
@@ -58,6 +58,7 @@ namespace Group32_Client.Controllers
         {
             HttpResponseMessage response;
             var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            res.Type = "Restaurant";
             response = await client.PostAsJsonAsync("api/destination", res);
             if(response.IsSuccessStatusCode)
             {

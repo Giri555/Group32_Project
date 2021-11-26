@@ -29,6 +29,13 @@ namespace Group32_API.Controllers
             var results = _mapper.Map<IEnumerable<DestinationWithoutReviewsDto>>(destinations);
             return Ok(results);
         }
+        [HttpGet("restaurant")]
+        public async Task<ActionResult<DestinationInfo>> GetListRestaurant()
+        {
+            var destinations = await _destinationRepository.GetAllRestaurant("Restaurant");
+            var results = _mapper.Map<IEnumerable<DestinationWithoutReviewsDto>>(destinations);
+            return Ok(results);
+        }
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DestinationInfo>> GetDestinationById(int id, bool includeReview = false)

@@ -23,6 +23,11 @@ namespace Group32_API.Models
             var result = _context.DestinationInfos.OrderBy(d => d.Name);
             return await result.ToListAsync();
         }
+        public async Task<IEnumerable<DestinationInfo>> GetAllRestaurant(string category)
+        {
+            var result = _context.DestinationInfos.Where(c => c.Type == category).OrderBy(d => d.Name);
+            return await result.ToListAsync();
+        }
         public async Task<DestinationInfo> GetDestinationById(int desId, bool includePointsOfInterest)
         {
             IQueryable<DestinationInfo> result;
