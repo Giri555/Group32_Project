@@ -26,7 +26,7 @@ namespace Group32_Client.Controllers
         }
 
         [HttpGet]
-        [Route("{resId}/Reviews")]
+        [Route("Review/ReviewList/{resId}")]
         public async Task<IActionResult> ReviewList(string resId)
         {
             string json;
@@ -57,6 +57,73 @@ namespace Group32_Client.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Review/{resId}/CreateReview")]
+        public IActionResult CreateReview()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("Review/{resId}/CreateReview")]
+        public async Task<IActionResult> CreateReview(int resId, Review review)
+        {
+            HttpResponseMessage response;
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            review.DestinationId = resId;
+            review.DateTime = DateTime.Now.ToString("dd/MM/yyyy");
+            response = await client.PostAsJsonAsync("api/review/" + resId + "/review", review);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ReviewList", new { id = resId });
+            }
+            ModelState.AddModelError("", "Please try again, review data incomplete.");
+            return View(review);
+        }
+
+
+        [HttpGet]
+        [Route("Review/UpdateReview/{reviewId}")]
+        public async Task<ActionResult> UpdateReview(string reviewId)
+        {
+            string json;
+            var request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + reviewId);
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            var response = await client.SendAsync(request);
+            Review review = null;
+            if (response.IsSuccessStatusCode)
+            {
+                json = await response.Content.ReadAsStringAsync();
+                review = JsonConvert.DeserializeObject<Review>(json);
+            }
+            return View(review);
+        }
+
+        [HttpPost]
+        [Route("Review/UpdateReview/{reviewId}")]
+        public async Task<ActionResult> UpdateReview(string reviewId, Review updatedReview)
+        {
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            updatedReview.DateTime = DateTime.Now.ToString("dd/MM/yyyy");
+            var response = await client.PutAsJsonAsync("api/review/" + updatedReview.DestinationId + "/reviews/" + reviewId, updatedReview);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ReviewList", new { id = updatedReview.DestinationId });
+            }
+
+            ModelState.AddModelError("", "Please try again.");
+            return View(updatedReview);
+        }
+
+        [HttpGet]
+        [Route("Review/{resId}/DeleteReview/{reviewId}")]
+        public async Task<ActionResult> DeleteReview(string reviewId, int resId)
+        {
+            HttpResponseMessage response;
+            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            response = await client.DeleteAsync("api/review/reviews/" + reviewId);
+            return RedirectToAction("ReviewList", new { id = resId });
+        }
 
     }
 }

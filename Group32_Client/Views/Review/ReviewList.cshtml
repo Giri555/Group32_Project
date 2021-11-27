@@ -16,6 +16,11 @@
             <p>Date: @item.DateTime</p>
             <p>Rating: @item.Rating</p>
             <p>Comment: @item.Comment</p>
+            <div>
+                <a class="btn btn-warning" asp-action="UpdateReview" asp-controller="Review" asp-route-reviewId="@item.ReviewId">Edit</a>
+                |
+                <a class="btn btn-danger" asp-action="DeleteReview" asp-controller="Review" asp-route-reviewId="@item.ReviewId" asp-route-resId="@item.DestinationId">Delete</a>
+            </div>
             <hr />
         }
     }
@@ -27,3 +32,4 @@
 <div>
     <a asp-controller="Restaurant" asp-action="RestaurantList">Back to List</a>
 </div>
+
