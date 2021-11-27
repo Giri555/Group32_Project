@@ -38,35 +38,39 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @if (Model != null)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="ReviewList" asp-controller="Review" asp-route-resId="@item.DestinationId">View</a>
-                </td>
-                <td>
-                    <a class="btn btn-info" asp-action="CreateReview" asp-controller="Review" asp-route-resId="@item.DestinationId">Add</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="UpdateRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Edit</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" asp-action="DeleteRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Delete</a>
-                </td>
-            </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="ReviewList" asp-controller="Review" asp-route-resId="@item.DestinationId">View</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-info" asp-action="CreateReview" asp-controller="Review" asp-route-resId="@item.DestinationId">Add</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" asp-action="UpdateRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Edit</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="DeleteRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Delete</a>
+                        </td>
+                    </tr>
+                }
             }
+
         </tbody>
     </table>
 </div>
