@@ -22,6 +22,16 @@ namespace Group32_API.Controllers
             _mapper = mapper;
         }
 
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DestinationInfo>> GetReviewById(int id)
+        {
+            var review = await _reviewRepository.GetReviewById(id);
+            if(review == null) { return NotFound(); }
+            var reviewResult = _mapper.Map<Review>(review);
+            return Ok(reviewResult);
+        }
+
         // GET: api/<controller>
         [HttpGet("{desId}/reviews")]
         public async Task<ActionResult<Review>> GetReviews(int desId)
