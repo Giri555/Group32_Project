@@ -29,8 +29,8 @@ namespace Group32_Client
             // Register a Named HttpClient:
             services.AddHttpClient("project_api", c =>
             {
-                c.BaseAddress = new Uri("https://localhost:44373/");
-                //c.BaseAddress = new Uri("http://lb-group32api-1052255083.ca-central-1.elb.amazonaws.com/"); // Published API endpoint
+                //c.BaseAddress = new Uri("https://localhost:44373/");
+                c.BaseAddress = new Uri("http://lb-group32api-1052255083.ca-central-1.elb.amazonaws.com/"); // Published API endpoint
                 c.DefaultRequestHeaders.Add("Accept", "application/json");
             });
         }
