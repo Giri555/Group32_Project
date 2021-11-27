@@ -13,20 +13,20 @@ using System.Threading.Tasks;
 
 namespace Group32_Client.Controllers
 {
-    public class HomeController : Controller
+    public class RestaurantController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<RestaurantController> _logger;
         private readonly IHttpClientFactory _clientFactory;
         private const string NAMED_CLIENT = "project_api";
 
-        public HomeController(ILogger<HomeController> logger, IHttpClientFactory clientFactory)
+        public RestaurantController(ILogger<RestaurantController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> RestaurantList()
         {
             string json;
             HttpResponseMessage response;
@@ -62,7 +62,7 @@ namespace Group32_Client.Controllers
             response = await client.PostAsJsonAsync("api/destination", res);
             if(response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("RestaurantList");
             }
 
             ModelState.AddModelError("", "Please try again, all data about a restaurant must be provided.");
@@ -94,7 +94,7 @@ namespace Group32_Client.Controllers
             var response = await client.PutAsJsonAsync("api/destination/" + resId, res);
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("RestaurantList");
             }
 
             ModelState.AddModelError("", "Please try again.");
@@ -108,38 +108,9 @@ namespace Group32_Client.Controllers
             HttpResponseMessage response;
             var client = _clientFactory.CreateClient(NAMED_CLIENT);
             response = await client.DeleteAsync("api/destination/" + resId);
-            return RedirectToAction("Index");
+            return RedirectToAction("RestaurantList");
         }
 
-        [HttpGet]
-        [Route("{resId}/Reviews")]
-        public async Task<IActionResult> Reviews(string resId)
-        {
-            string json;
-            HttpResponseMessage response;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + resId + "/reviews");
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
-            response = await client.SendAsync(request);
-            if (response.IsSuccessStatusCode)
-            {
-                json = await response.Content.ReadAsStringAsync();
-                List<Review> reviews = JsonConvert.DeserializeObject<List<Review>>(json);
-                ViewBag.Reviews = reviews;
-
-                // Get the restaurant's name:
-                request = new HttpRequestMessage(HttpMethod.Get, "api/destination/" + resId);
-                response = await client.SendAsync(request);
-                if(response.IsSuccessStatusCode)
-                {
-                    json = await response.Content.ReadAsStringAsync();
-                    ViewBag.ResName = JsonConvert.DeserializeObject<Restaurant>(json).Name;
-                }
-
-                return View(reviews);
-            }
-            else
-                return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

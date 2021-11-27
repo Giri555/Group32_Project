@@ -51,13 +51,13 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        <a class="btn btn-primary" asp-action="Reviews" asp-route-resId="@item.DestinationId">Reviews</a>
+                        <a class="btn btn-primary" asp-action="ReviewList" asp-controller="Review" asp-route-resId="@item.DestinationId">Reviews</a>
                     </td>
                     <td>
-                        <a class="btn btn-warning" asp-action="UpdateRestaurant" asp-route-resId="@item.DestinationId">Edit</a>
+                        <a class="btn btn-warning" asp-action="UpdateRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Edit</a>
                     </td>
                     <td>
-                        <a class="btn btn-danger" asp-action="DeleteRestaurant" asp-route-resId="@item.DestinationId">Delete</a>
+                        <a class="btn btn-danger" asp-action="DeleteRestaurant" asp-controller="Restaurant" asp-route-resId="@item.DestinationId">Delete</a>
                     </td>
                 </tr>
             }
