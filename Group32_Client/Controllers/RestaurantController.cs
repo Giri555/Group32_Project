@@ -17,21 +17,23 @@ namespace Group32_Client.Controllers
     {
         private readonly ILogger<RestaurantController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly HttpClient client;
         private const string NAMED_CLIENT = "project_api";
+        private HttpResponseMessage response;
+        private HttpRequestMessage request;
+        private string json;
 
         public RestaurantController(ILogger<RestaurantController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
+            client = _clientFactory.CreateClient(NAMED_CLIENT);
         }
 
         [HttpGet]
         public async Task<IActionResult> RestaurantList()
         {
-            string json;
-            HttpResponseMessage response;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination/restaurant");
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            request = new HttpRequestMessage(HttpMethod.Get, "api/destination/restaurant");
             response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -56,8 +58,6 @@ namespace Group32_Client.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateRestaurant(Restaurant res)
         {
-            HttpResponseMessage response;
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
             res.Type = "Restaurant";
             response = await client.PostAsJsonAsync("api/destination", res);
             if(response.IsSuccessStatusCode)
@@ -73,10 +73,8 @@ namespace Group32_Client.Controllers
         [Route("{resId}/UpdateRestaurant")]
         public async Task<ActionResult> UpdateRestaurant(string resId)
         {
-            string json;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/destination/" + resId);
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
-            var response = await client.SendAsync(request);
+            request = new HttpRequestMessage(HttpMethod.Get, "api/destination/" + resId);
+            response = await client.SendAsync(request);
             Restaurant res = null;
             if (response.IsSuccessStatusCode)
             {
@@ -90,8 +88,7 @@ namespace Group32_Client.Controllers
         [Route("{resId}/UpdateRestaurant")]
         public async Task<ActionResult> UpdateRestaurant(string resId, Restaurant res)
         {
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
-            var response = await client.PutAsJsonAsync("api/destination/" + resId, res);
+            response = await client.PutAsJsonAsync("api/destination/" + resId, res);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("RestaurantList");
@@ -105,8 +102,6 @@ namespace Group32_Client.Controllers
         [Route("{resId}/DeleteRestaurant")]
         public async Task<ActionResult> DeleteRestaurant(string resId)
         {
-            HttpResponseMessage response;
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
             response = await client.DeleteAsync("api/destination/" + resId);
             return RedirectToAction("RestaurantList");
         }

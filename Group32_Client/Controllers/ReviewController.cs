@@ -17,22 +17,24 @@ namespace Group32_Client.Controllers
     {
         private readonly ILogger<ReviewController> _logger;
         private readonly IHttpClientFactory _clientFactory;
+        private readonly HttpClient client;
         private const string NAMED_CLIENT = "project_api";
+        private HttpResponseMessage response;
+        private HttpRequestMessage request;
+        private string json;
 
         public ReviewController(ILogger<ReviewController> logger, IHttpClientFactory clientFactory)
         {
             _logger = logger;
             _clientFactory = clientFactory;
+            client = _clientFactory.CreateClient(NAMED_CLIENT);
         }
 
         [HttpGet]
         [Route("Review/ReviewList/{resId}")]
         public async Task<IActionResult> ReviewList(string resId)
         {
-            string json;
-            HttpResponseMessage response;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + resId + "/reviews");
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
+            request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + resId + "/reviews");
             response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
@@ -68,8 +70,6 @@ namespace Group32_Client.Controllers
         [Route("Review/{resId}/CreateReview")]
         public async Task<IActionResult> CreateReview(int resId, Review review)
         {
-            HttpResponseMessage response;
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
             review.DestinationId = resId;
             review.DateTime = DateTime.Now.ToString("dd/MM/yyyy");
             response = await client.PostAsJsonAsync("api/review/" + resId + "/review", review);
@@ -81,15 +81,12 @@ namespace Group32_Client.Controllers
             return View(review);
         }
 
-
         [HttpGet]
         [Route("Review/UpdateReview/{reviewId}")]
         public async Task<ActionResult> UpdateReview(string reviewId)
         {
-            string json;
-            var request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + reviewId);
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
-            var response = await client.SendAsync(request);
+            request = new HttpRequestMessage(HttpMethod.Get, "api/review/" + reviewId);
+            response = await client.SendAsync(request);
             Review review = null;
             if (response.IsSuccessStatusCode)
             {
@@ -103,9 +100,8 @@ namespace Group32_Client.Controllers
         [Route("Review/UpdateReview/{reviewId}")]
         public async Task<ActionResult> UpdateReview(string reviewId, Review updatedReview)
         {
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
             updatedReview.DateTime = DateTime.Now.ToString("dd/MM/yyyy");
-            var response = await client.PutAsJsonAsync("api/review/" + updatedReview.DestinationId + "/reviews/" + reviewId, updatedReview);
+            response = await client.PutAsJsonAsync("api/review/" + updatedReview.DestinationId + "/reviews/" + reviewId, updatedReview);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("ReviewList", new { id = updatedReview.DestinationId });
@@ -119,8 +115,6 @@ namespace Group32_Client.Controllers
         [Route("Review/{resId}/DeleteReview/{reviewId}")]
         public async Task<ActionResult> DeleteReview(string reviewId, int resId)
         {
-            HttpResponseMessage response;
-            var client = _clientFactory.CreateClient(NAMED_CLIENT);
             response = await client.DeleteAsync("api/review/reviews/" + reviewId);
             return RedirectToAction("ReviewList", new { id = resId });
         }

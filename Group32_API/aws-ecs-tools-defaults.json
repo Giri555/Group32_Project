@@ -20,7 +20,7 @@
     "container-port-mapping"    : "80:80",
     "container-environment-variables" : "\"ASPNETCORE_ENVIRONMENT\"=\"Production\"",
     "skip-image-push"                 : false,
-    "cluster-service"                 : "service-Group32API",
+    "cluster-service"                 : "ecs-cluster-group32api/service-Group32API",
     "desired-count"                   : 2,
     "deployment-minimum-healthy-percent" : 50,
     "deployment-maximum-percent"         : 200,
