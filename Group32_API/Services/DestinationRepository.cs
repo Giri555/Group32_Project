@@ -28,10 +28,10 @@ namespace Group32_API.Models
             var result = _context.DestinationInfos.Where(c => c.Type == category).OrderBy(d => d.Name);
             return await result.ToListAsync();
         }
-        public async Task<DestinationInfo> GetDestinationById(int desId, bool includePointsOfInterest)
+        public async Task<DestinationInfo> GetDestinationById(int desId, bool includeReviews)
         {
             IQueryable<DestinationInfo> result;
-            if (includePointsOfInterest)
+            if (includeReviews)
             {
                 result = _context.DestinationInfos.Include(c => c.Reviews).Where(c => c.DestinationId == desId);
             }
@@ -61,8 +61,8 @@ namespace Group32_API.Models
         }
         public async Task AddReviewForDestination(int desId, Review review)
         {
-            var city = await GetDestinationById(desId, false);
-            city.Reviews.Add(review);
+            var destination = await GetDestinationById(desId, false);
+            destination.Reviews.Add(review);
         }
         public void DeletePointOfInterest(Review review)
         {

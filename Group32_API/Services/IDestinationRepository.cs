@@ -14,13 +14,8 @@ namespace Group32_API.Models
         Task<Review> GetReviewById(int reviewId);
         Task<IEnumerable<Review>> GetReviewsForDestination(int desId);
         Task<IEnumerable<Review>> GetReviewsByRatingForDetination(int desId, int rating);
-        //create
         void CreateDestination(DestinationInfo des);
         Task AddReviewForDestination(int desId, Review newReview);
-        //update
-        //Task UpdateAReviewForDestination(int desId, Review updateReview);
-        //Task UpdateDestination(int desId, Destination destination);
-        //delete
         Task DeleteDestination(int desId);
         Task DeleteReview(int reviewId);
         Task<bool> Save();

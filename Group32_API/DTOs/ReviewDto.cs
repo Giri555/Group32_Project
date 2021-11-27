@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Models
 {
-    public class ReviewDto // for implementation refer ppt: week#9(API with EFCORE) --> slide # 13
+    public class ReviewDto
     {
-        public int ReviewId { get; set; } // PK
-        public int DestinationId { get; set; } // FK
-        public string Email { get; set; } // persons full name
+        public int ReviewId { get; set; }
+        public int DestinationId { get; set; } 
+        public string Email { get; set; }
         public string DateTime { get; set; }
-        public int Rating { get; set; } // # 1-10
+        public int Rating { get; set; }
         public string Comment { get; set; }
     }
 }

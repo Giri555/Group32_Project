@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Group32_API.Models
 {
-    public class DestinationWithoutReviewsDto // for implementation refer ppt: week#9(API with EFCORE) --> slide # 13
+    public class DestinationWithoutReviewsDto
     {
         public int DestinationId { get; set; } 
         public string Name { get; set; } 

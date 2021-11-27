@@ -16,11 +16,13 @@ namespace Group32_API.Controllers
     {
         private IDestinationRepository _destinationRepository;
         private readonly IMapper _mapper;
+
         public DestinationController(IDestinationRepository destinationRepository, IMapper mapper)
         {
             _destinationRepository = destinationRepository;
             _mapper = mapper;
         }
+
         // GET: api/<controller>
         [HttpGet]
         public async Task<ActionResult<DestinationInfo>> GetListDestinations()
@@ -29,6 +31,7 @@ namespace Group32_API.Controllers
             var results = _mapper.Map<IEnumerable<DestinationWithoutReviewsDto>>(destinations);
             return Ok(results);
         }
+
         [HttpGet("restaurant")]
         public async Task<ActionResult<DestinationInfo>> GetListRestaurant()
         {
@@ -36,6 +39,7 @@ namespace Group32_API.Controllers
             var results = _mapper.Map<IEnumerable<DestinationWithoutReviewsDto>>(destinations);
             return Ok(results);
         }
+
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DestinationInfo>> GetDestinationById(int id, bool includeReview = false)
@@ -50,6 +54,7 @@ namespace Group32_API.Controllers
             var destinationWithoutReviewsResult = _mapper.Map<DestinationWithoutReviewsDto>(destination);
             return Ok(destinationWithoutReviewsResult);
         }
+
         // POST api/<controller>
         [HttpPost]
         public async Task<ActionResult<DestinationInfo>> CreateDestination([FromBody] Destination4CreationOrUpdateDto destination) {
@@ -63,6 +68,7 @@ namespace Group32_API.Controllers
             }
             return NoContent();
         }
+
         // PUT api/<controller>/5
         [HttpPut("{desId}")]
         public async Task<ActionResult> UpdateDestination(int desId, [FromBody] Destination4CreationOrUpdateDto destination)
@@ -78,6 +84,7 @@ namespace Group32_API.Controllers
             }
             return NoContent();
         }
+
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDestination(int id) {
@@ -88,5 +95,6 @@ namespace Group32_API.Controllers
             }
             return Ok();
         }
+
     }
 }

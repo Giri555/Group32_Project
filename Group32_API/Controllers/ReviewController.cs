@@ -40,10 +40,8 @@ namespace Group32_API.Controllers
             {
                 return NotFound();
             }
-
             var reviews4Destination = await _reviewRepository.GetReviewsForDestination(desId);
             var reviews4DestinationResults = _mapper.Map<IEnumerable<Review>>(reviews4Destination);
-
             return Ok(reviews4Destination);
         }
 
@@ -52,45 +50,32 @@ namespace Group32_API.Controllers
         public async Task<ActionResult<Review>> CreateReview(int desId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
-
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             if (!await _reviewRepository.DestinationExists(desId)) return NotFound();
-
             var finalReview = _mapper.Map<Review>(newReview);
-
             await _reviewRepository.AddReviewForDestination(desId, finalReview);
-
             if (!await _reviewRepository.Save())
             {
                 return StatusCode(500, "A problem happened while handling your request.");
             }
-
             var createdReviewToReturn = _mapper.Map<ReviewDto>(finalReview);
-
             return CreatedAtAction("GetReviews", new { desId = desId, id = createdReviewToReturn.DestinationId }, createdReviewToReturn);
         }
+
         // PUT api/<controller>/5
         [HttpPut("{desId}/reviews/{reviewId}")]
         public async Task<ActionResult> UpdateReview(int desId, int reviewId, [FromBody] Review4CreationOrUpdateDto newReview)
         {
             if (newReview == null) return BadRequest();
-
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             if (!await _reviewRepository.DestinationExists(desId)) return NotFound();
-
             Review previousReview = await _reviewRepository.GetReviewById(reviewId);
-
             if (previousReview == null) return NotFound();
-
             _mapper.Map(newReview, previousReview);
-
             if (!await _reviewRepository.Save())
             {
                 return StatusCode(500, "A problem happened while updating review your request.");
             }
-
             return NoContent();
         }
 
